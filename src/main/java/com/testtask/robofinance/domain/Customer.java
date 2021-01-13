@@ -19,6 +19,16 @@ public class Customer {
     private String sex;
 
 
+    public Customer(Integer id, int registred_address_id, int actual_address_id, String first_name, String last_name, String middle_name, String sex) {
+        this.id = id;
+        this.registred_address_id = registred_address_id;
+        this.actual_address_id = actual_address_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.middle_name = middle_name;
+        this.sex = sex;
+    }
+
     public Customer(String first_name, String last_name, String middle_name, Integer registred_address,
                     Integer actual_address, String sex) {
         this.first_name = first_name;

@@ -12,6 +12,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    private String country;
     private String region;
     private String city;
     private String street;
@@ -23,15 +24,22 @@ public class Address {
     public Address() {
     }
 
-    public Address(Integer id, String region, String city, String street, String house, String flat, Date created, Date modified) {
-        this.id = id;
+    public Address(String country, String region, String city, String street, String house, String flat, Date createdTime) {
+        this.country = country;
         this.region = region;
         this.city = city;
         this.street = street;
         this.house = house;
         this.flat = flat;
-        this.created = created;
-        this.modified = modified;
+        this.created = createdTime;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public void setId(Integer id) {

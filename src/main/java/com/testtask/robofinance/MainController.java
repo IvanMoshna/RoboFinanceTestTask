@@ -7,37 +7,39 @@ import com.testtask.robofinance.repos.CustomerRepo;
 import com.testtask.robofinance.service.MainService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 
 @Controller
-public class GreetingController {
+public class MainController {
     private final AddressRepo addressRepo;
     private final CustomerRepo customerRepo;
     private MainService mainService;
 
-    public GreetingController(AddressRepo addressRepo, CustomerRepo customerRepo,
-                              MainService mainService) {
+    public static final String MAIN_PAGE = "main";
+    public static final String CUSTOMER_DETAILS = "customer-details";
+    public static final String HOME_PAGE = "home";
+
+    public MainController(AddressRepo addressRepo, CustomerRepo customerRepo,
+                          MainService mainService) {
         this.addressRepo = addressRepo;
         this.customerRepo = customerRepo;
         this.mainService = mainService;
     }
 
-    @GetMapping("/greeting")
+    @GetMapping("/home")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
-        return "greeting.html";
+        return "home.html";
     }
 
     @GetMapping
     public String main(Model model) {
         List<Customer> customersList = mainService.getAllCustomers();
         model.addAttribute("customers", customersList);
-        return "main";
+        return MAIN_PAGE;
     }
 
     @PostMapping
@@ -71,6 +73,41 @@ public class GreetingController {
         Iterable<Customer> customers = customerRepo.findAll();
         model.addAttribute("customers", customers);
 
-        return "main";
+        return MAIN_PAGE;
+    }
+
+    @GetMapping("{id}")
+    public String customerDetails(@PathVariable(value = "id") int id, Model model) throws Exception {
+        Customer customer = customerRepo.findById(id).orElseThrow(() -> new Exception("Customer not found - " + id));
+        Address actualAddress = addressRepo.findById(customer.getActual_address()).orElseThrow(() ->
+                new Exception("Address not found - " + customer.getActual_address()));
+
+        model.addAttribute("customer", customer);
+        model.addAttribute("actualAddress", actualAddress);
+        return CUSTOMER_DETAILS;
+    }
+
+    @PostMapping("{id}/update")
+    public String actualAddressPostUpdate(@PathVariable(value = "id") int id,
+                                          @RequestParam String country,
+                                          @RequestParam String region,
+                                          @RequestParam String city,
+                                          @RequestParam String street,
+                                          @RequestParam String house,
+                                          @RequestParam String flat,
+                                          Model model) throws Exception {
+
+        Address address = addressRepo.findById(id).orElseThrow(() ->
+                new Exception("Address not found - " + id));
+
+        address.setCountry(country);
+        address.setRegion(region);
+        address.setCity(city);
+        address.setStreet(street);
+        address.setHouse(house);
+        address.setFlat(flat);
+        addressRepo.save(address);
+
+        return HOME_PAGE;
     }
 }

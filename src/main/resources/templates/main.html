@@ -8,37 +8,79 @@
 <body>
     <div>
         <form method="post">
-            <label>Name             </label>
-            <input type="text" name="first_name" placeholder="Enter first name"/>
-            <input type="text" name="second_name" placeholder="Enter second name"/>
-            <input type="text" name="middle_name" placeholder="Enter middle name"/>
-            <input type="text" name="sex" placeholder="Enter sex"/><br/>
+            <label>Name</label><br/>
+            <input type="text" name="first_name" placeholder="Enter first name" class="form-control" required/>
+            <input type="text" name="second_name" placeholder="Enter second name" class="form-control" required/>
+            <input type="text" name="middle_name" placeholder="Enter middle name" class="form-control" required/>
+            <!--<input type="text" name="sex" placeholder="Enter sex" class="form-control" required/><br/>-->
 
-            <label>Registred Address</label>
-            <input type="text" name="country" placeholder="Enter country"/>
-            <input type="text" name="region" placeholder="Enter region"/>
-            <input type="text" name="city" placeholder="Enter city"/>
-            <input type="text" name="street" placeholder="Enter street"/>
-            <input type="text" name="house" placeholder="Enter house"/>
-            <input type="text" name="flat" placeholder="Enter flat"/><br/>
+                <select name="sex" class="form-control" required>
+            <option value="">Select male</option>
+            <option th:value="male"
+                    th:text="male">
+            </option>
+            <option th:value="female"
+                    th:text="female">
+            </option>
+                </select><br/>
 
-            <label>Actual Address    </label>
-            <input type="text" name="actualCountry" placeholder="Enter country"/>
-            <input type="text" name="actualRegion" placeholder="Enter region"/>
-            <input type="text" name="actualCity" placeholder="Enter city"/>
-            <input type="text" name="actualStreet" placeholder="Enter street"/>
-            <input type="text" name="actualHouse" placeholder="Enter house"/>
-            <input type="text" name="actualFlat" placeholder="Enter flat"/><br/>
+            <label>Registred Address</label><br/>
+            <input type="text" name="country" placeholder="Enter country" class="form-control" required/>
+            <input type="text" name="region" placeholder="Enter region" class="form-control" required/>
+            <input type="text" name="city" placeholder="Enter city" class="form-control" required/>
+            <input type="text" name="street" placeholder="Enter street" class="form-control" required/>
+            <input type="text" name="house" placeholder="Enter house" class="form-control" required/>
+            <input type="text" name="flat" placeholder="Enter flat" class="form-control" required/><br/>
+
+            <label>Actual Address</label><br/>
+            <input type="text" name="actualCountry" placeholder="Enter country" class="form-control" required />
+            <input type="text" name="actualRegion" placeholder="Enter region" class="form-control" required />
+            <input type="text" name="actualCity" placeholder="Enter city" class="form-control" required />
+            <input type="text" name="actualStreet" placeholder="Enter street" class="form-control" required />
+            <input type="text" name="actualHouse" placeholder="Enter house" class="form-control" required />
+            <input type="text" name="actualFlat" placeholder="Enter flat" class="form-control" required /><br/>
             <button type="submit">Добавить</button>
         </form>
     </div>
+    <div class="col-md-4 order-md-1 mb-1">
+        <h4 class="d-flex justify-content-between align-items-upper mb-3">
+            <span class="text-muted">Customers</span>
+        </h4>
+        <style>
+            .visible {
+                display: block;
+            }
+
+            .invisible {
+                display: none;
+            }
+        </style>
     <input class="input" type="text" placeholder="Search" aria-label="Search">
     <ul th:each="customer : ${customers}">
         <li class="item visible">
             <div>
-                <a th:href="${customer.getId()}" class="btn btn-warning" th:text="${customer.getFirst_name()}"></a>
+                <a th:href="${customer.getId()}" class="btn btn-warning" th:text="${customer.getFirst_name()} + ' ' +  ${customer.getLast_name()}"></a>
             </div>
         </li>
     </ul>
+        <script>
+            const input = document.querySelector('.input');
+            const li = [...document.querySelectorAll('.item')]
+
+            input.addEventListener('input', (event) => {
+                console.log(event.target.value)
+
+                li.forEach(item => {
+                    if (item.innerText.toLowerCase().indexOf(event.target.value.toLowerCase())  !== -1) {
+                        item.classList.add('visible');
+                        item.classList.remove('invisible')
+                    } else {
+                        item.classList.remove('visible');
+                        item.classList.add('invisible')
+                    }
+                })
+            })
+        </script>
+    </div>
 </body>
 </html>

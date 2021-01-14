@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hi! Main page</title>
+</head>
+<body>
+<div>
+    <form th:action="${actualAddress.id} +'/update'" method="post">
+        <label>Name</label><br/>
+        <input type="text" name="first_name" th:value="${customer.getFirst_name()}"/>
+        <input type="text" name="second_name" th:value="${customer.getLast_name()}"/>
+        <input type="text" name="middle_name" th:value="${customer.getMiddle_name()}"/>
+        <input type="text" name="sex" th:value="${customer.getSex()}"/><br/>
+
+        <label>Actual Address</label><br/>
+        <input type="text" name="country" th:value="${actualAddress.getCountry()}" class="form-control" required/>
+        <input type="text" name="region" th:value="${actualAddress.getRegion()}" class="form-control" required/>
+        <input type="text" name="city" th:value="${actualAddress.getCity()}" class="form-control" required/>
+        <input type="text" name="street" th:value="${actualAddress.getStreet()}" class="form-control" required/>
+        <input type="text" name="house" th:value="${actualAddress.getHouse()}" class="form-control" required/>
+        <input type="text" name="flat" th:value="${actualAddress.getFlat()}" class="form-control" required/><br/>
+
+        <button type="submit" class="btn btn-secondary">Update</button>
+
+    </form>
+</div>
+</body>
+</html>

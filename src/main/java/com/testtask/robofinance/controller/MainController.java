@@ -32,7 +32,7 @@ public class MainController {
     @GetMapping("/home")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
-        return "home.html";
+        return HOME_PAGE;
     }
 
     @GetMapping
@@ -42,6 +42,7 @@ public class MainController {
         return MAIN_PAGE;
     }
 
+    //Save new customer
     @PostMapping
     public String addCustomer(@RequestParam String first_name,
                               @RequestParam String second_name,
@@ -76,6 +77,7 @@ public class MainController {
         return MAIN_PAGE;
     }
 
+    //Load selected customer
     @GetMapping("{id}")
     public String customerDetails(@PathVariable(value = "id") int id, Model model) throws Exception {
         Customer customer = customerRepo.findById(id).orElseThrow(() -> new Exception("Customer not found - " + id));
@@ -87,6 +89,7 @@ public class MainController {
         return CUSTOMER_DETAILS;
     }
 
+    //Update actual address at customer
     @PostMapping("{id}/update")
     public String actualAddressPostUpdate(@PathVariable(value = "id") int id,
                                           @RequestParam String country,

@@ -1,4 +1,4 @@
-package com.testtask.robofinance;
+package com.testtask.robofinance.controller;
 
 import com.testtask.robofinance.domain.Address;
 import com.testtask.robofinance.domain.Customer;

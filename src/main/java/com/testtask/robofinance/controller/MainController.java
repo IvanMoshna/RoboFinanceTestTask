@@ -109,6 +109,7 @@ public class MainController {
         address.setStreet(street);
         address.setHouse(house);
         address.setFlat(flat);
+        address.setModified(new Date(System.currentTimeMillis()));
         addressRepo.save(address);
 
         return HOME_PAGE;

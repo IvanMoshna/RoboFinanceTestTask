@@ -7,6 +7,6 @@ Spring boot
 Запуск сервиса:
 Вариант 1: mvn spring-boot:run
 
-Вариант 2: mvn clean package, в IDE - запуск BannersApplication
+Вариант 2: mvn clean package, в IDE - запуск Application
 
 URL: http://localhost:8091
